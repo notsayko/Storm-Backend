@@ -1,0 +1,132 @@
+{
+  "events": [
+    {
+      "gameId": "Fortnite",
+      "displayDataId": "ArenaSolo",
+      "eventId": "epicgames_Arena_S24_Solo",
+      "announcementTime": "2024-03-01T01:36:52Z",
+      "beginTime": "2024-02-29T01:36:52Z",
+      "endTime": "9999-12-31T23:59:59.000Z",
+      "platforms": ["PS4", "XboxOne", "Switch", "Android", "IOS", "Windows"],
+      "regions": ["NAE", "ME", "NAW", "OCE", "ASIA", "EU", "BR"],
+      "metadata": {
+        "TrackedStats": ["PLACEMENT_STAT_INDEX", "TEAM_ELIMS_STAT_INDEX", "MATCH_PLAYED_STAT"],
+        "minimumAccountLevel": 0
+      },
+      "eventWindows": [
+        {
+          "eventTemplateId": "eventTemplate_Arena_S24_Division1_Solo",
+          "eventWindowId": "Arena_S24_Division1_Solo",
+          "beginTime": "2024-02-29T01:36:52Z",
+          "endTime": "9999-12-31T23:59:59.000Z",
+          "metadata": { "RoundType": "Arena", "ThresholdToAdvanceDivision": 400, "divisionRank": 0 },
+          "requireAllTokens": ["ARENA_S24_Division1"],
+          "requireNoneTokensCaller": ["ARENA_S24_Division2","ARENA_S24_Division3","ARENA_S24_Division4","ARENA_S24_Division5","ARENA_S24_Division6","ARENA_S24_Division7","ARENA_S24_Division8","ARENA_S24_Division9","ARENA_S24_Division10"],
+          "scoreLocations": [{"scoreMode": "persistent", "scoreId": "Hype"}]
+        },
+        {
+          "eventTemplateId": "eventTemplate_Arena_S24_Division2_Solo",
+          "eventWindowId": "Arena_S24_Division2_Solo",
+          "beginTime": "2024-02-29T01:36:52Z",
+          "endTime": "9999-12-31T23:59:59.000Z",
+          "metadata": { "RoundType": "Arena", "ThresholdToAdvanceDivision": 800, "divisionRank": 1 },
+          "requireAllTokens": ["ARENA_S24_Division2"],
+          "requireNoneTokensCaller": ["ARENA_S24_Division1","ARENA_S24_Division3","ARENA_S24_Division4","ARENA_S24_Division5","ARENA_S24_Division6","ARENA_S24_Division7","ARENA_S24_Division8","ARENA_S24_Division9","ARENA_S24_Division10"],
+          "scoreLocations": [{"scoreMode": "persistent", "scoreId": "Hype"}]
+        },
+        {
+          "eventTemplateId": "eventTemplate_Arena_S24_Division3_Solo",
+          "eventWindowId": "Arena_S24_Division3_Solo",
+          "beginTime": "2024-02-29T01:36:52Z",
+          "endTime": "9999-12-31T23:59:59.000Z",
+          "metadata": { "RoundType": "Arena", "ThresholdToAdvanceDivision": 1200, "divisionRank": 2 },
+          "requireAllTokens": ["ARENA_S24_Division3"],
+          "requireNoneTokensCaller": ["ARENA_S24_Division1","ARENA_S24_Division2","ARENA_S24_Division4","ARENA_S24_Division5","ARENA_S24_Division6","ARENA_S24_Division7","ARENA_S24_Division8","ARENA_S24_Division9","ARENA_S24_Division10"],
+          "scoreLocations": [{"scoreMode": "persistent", "scoreId": "Hype"}]
+        },
+        {
+          "eventTemplateId": "eventTemplate_Arena_S24_Division4_Solo",
+          "eventWindowId": "Arena_S24_Division4_Solo",
+          "beginTime": "2024-02-29T01:36:52Z",
+          "endTime": "9999-12-31T23:59:59.000Z",
+          "metadata": { "RoundType": "Arena", "ThresholdToAdvanceDivision": 2000, "divisionRank": 3 },
+          "requireAllTokens": ["ARENA_S24_Division4"],
+          "requireNoneTokensCaller": ["ARENA_S24_Division1","ARENA_S24_Division2","ARENA_S24_Division3","ARENA_S24_Division5","ARENA_S24_Division6","ARENA_S24_Division7","ARENA_S24_Division8","ARENA_S24_Division9","ARENA_S24_Division10"],
+          "scoreLocations": [{"scoreMode": "persistent", "scoreId": "Hype"}]
+        },
+        {
+          "eventTemplateId": "eventTemplate_Arena_S24_Division5_Solo",
+          "eventWindowId": "Arena_S24_Division5_Solo",
+          "beginTime": "2024-02-29T01:36:52Z",
+          "endTime": "9999-12-31T23:59:59.000Z",
+          "metadata": { "RoundType": "Arena", "ThresholdToAdvanceDivision": 3000, "divisionRank": 4 },
+          "requireAllTokens": ["ARENA_S24_Division5"],
+          "requireNoneTokensCaller": ["ARENA_S24_Division1","ARENA_S24_Division2","ARENA_S24_Division3","ARENA_S24_Division4","ARENA_S24_Division6","ARENA_S24_Division7","ARENA_S24_Division8","ARENA_S24_Division9","ARENA_S24_Division10"],
+          "scoreLocations": [{"scoreMode": "persistent", "scoreId": "Hype"}]
+        },
+        {
+          "eventTemplateId": "eventTemplate_Arena_S24_Division6_Solo",
+          "eventWindowId": "Arena_S24_Division6_Solo",
+          "beginTime": "2024-02-29T01:36:52Z",
+          "endTime": "9999-12-31T23:59:59.000Z",
+          "metadata": { "RoundType": "Arena", "ThresholdToAdvanceDivision": 5000, "divisionRank": 5 },
+          "requireAllTokens": ["ARENA_S24_Division6"],
+          "requireNoneTokensCaller": ["ARENA_S24_Division1","ARENA_S24_Division2","ARENA_S24_Division3","ARENA_S24_Division4","ARENA_S24_Division5","ARENA_S24_Division7","ARENA_S24_Division8","ARENA_S24_Division9","ARENA_S24_Division10"],
+          "scoreLocations": [{"scoreMode": "persistent", "scoreId": "Hype"}]
+        },
+        {
+          "eventTemplateId": "eventTemplate_Arena_S24_Division7_Solo",
+          "eventWindowId": "Arena_S24_Division7_Solo",
+          "beginTime": "2024-02-29T01:36:52Z",
+          "endTime": "9999-12-31T23:59:59.000Z",
+          "metadata": { "RoundType": "Arena", "ThresholdToAdvanceDivision": 7500, "divisionRank": 6 },
+          "requireAllTokens": ["ARENA_S24_Division7"],
+          "requireNoneTokensCaller": ["ARENA_S24_Division1","ARENA_S24_Division2","ARENA_S24_Division3","ARENA_S24_Division4","ARENA_S24_Division5","ARENA_S24_Division6","ARENA_S24_Division8","ARENA_S24_Division9","ARENA_S24_Division10"],
+          "scoreLocations": [{"scoreMode": "persistent", "scoreId": "Hype"}]
+        },
+        {
+          "eventTemplateId": "eventTemplate_Arena_S24_Division8_Solo",
+          "eventWindowId": "Arena_S24_Division8_Solo",
+          "beginTime": "2024-02-29T01:36:52Z",
+          "endTime": "9999-12-31T23:59:59.000Z",
+          "metadata": { "RoundType": "Arena", "ThresholdToAdvanceDivision": 10000, "divisionRank": 7 },
+          "requireAllTokens": ["ARENA_S24_Division8"],
+          "requireNoneTokensCaller": ["ARENA_S24_Division1","ARENA_S24_Division2","ARENA_S24_Division3","ARENA_S24_Division4","ARENA_S24_Division5","ARENA_S24_Division6","ARENA_S24_Division7","ARENA_S24_Division9","ARENA_S24_Division10"],
+          "scoreLocations": [{"scoreMode": "persistent", "scoreId": "Hype"}]
+        },
+        {
+          "eventTemplateId": "eventTemplate_Arena_S24_Division9_Solo",
+          "eventWindowId": "Arena_S24_Division9_Solo",
+          "beginTime": "2024-02-29T01:36:52Z",
+          "endTime": "9999-12-31T23:59:59.000Z",
+          "metadata": { "RoundType": "Arena", "ThresholdToAdvanceDivision": 15000, "divisionRank": 8 },
+          "requireAllTokens": ["ARENA_S24_Division9"],
+          "requireNoneTokensCaller": ["ARENA_S24_Division1","ARENA_S24_Division2","ARENA_S24_Division3","ARENA_S24_Division4","ARENA_S24_Division5","ARENA_S24_Division6","ARENA_S24_Division7","ARENA_S24_Division8","ARENA_S24_Division10"],
+          "scoreLocations": [{"scoreMode": "persistent", "scoreId": "Hype"}]
+        },
+        {
+          "eventTemplateId": "eventTemplate_Arena_S24_Division10_Solo",
+          "eventWindowId": "Arena_S24_Division10_Solo",
+          "beginTime": "2024-02-29T01:36:52Z",
+          "endTime": "9999-12-31T23:59:59.000Z",
+          "metadata": { "RoundType": "Arena", "ThresholdToAdvanceDivision": 99999, "divisionRank": 9 },
+          "requireAllTokens": ["ARENA_S24_Division10"],
+          "requireNoneTokensCaller": ["ARENA_S24_Division1","ARENA_S24_Division2","ARENA_S24_Division3","ARENA_S24_Division4","ARENA_S24_Division5","ARENA_S24_Division6","ARENA_S24_Division7","ARENA_S24_Division8","ARENA_S24_Division9"],
+          "scoreLocations": [{"scoreMode": "persistent", "scoreId": "Hype"}]
+        }
+      ]
+    }
+  ],
+  "templates": [
+    {
+      "eventTemplateId": "eventTemplate_Arena_S24_Division1_Solo",
+      "playlistId": "playlist_showdownalt_solo",
+      "matchCap": -1,
+      "scoringRules": [
+        { "trackedStat": "PLACEMENT_STAT_INDEX", "rewardTiers": [{ "pointsEarned": 25, "threshold": 1 }] },
+        { "trackedStat": "TEAM_ELIMS_STAT_INDEX", "rewardTiers": [{ "pointsEarned": 7, "threshold": 1 }] },
+        { "trackedStat": "MATCH_PLAYED_STAT", "rewardTiers": [{ "pointsEarned": 0, "threshold": 1 }] }
+      ]
+    }
+  ]
+}

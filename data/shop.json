@@ -1,0 +1,78 @@
+{
+  "featured1": {
+    "itemGrants": ["AthenaCharacter:CID_397_Athena_Commando_F_TreasureHunterFashion"],
+    "price": 1,
+    "TileSize": "Normal"
+  },
+  "featured2": {
+    "itemGrants": ["AthenaCharacter:CID_037_Athena_Commando_F_WinterCamo"],
+    "price": 1,
+    "TileSize": "Normal"
+  },
+  "featured3": {
+    "itemGrants": ["AthenaCharacter:CID_A_135_Athena_Commando_F_StreetFashionSummer"],
+    "price": 1,
+    "TileSize": "Normal"
+  },
+  "featured4": {
+    "itemGrants": ["AthenaCharacter:CID_A_040_Athena_Commando_F_Temple"],
+    "price": 1,
+    "TileSize": "Normal"
+  },
+  "featured5": {
+    "itemGrants": ["AthenaPickaxe:Pickaxe_ID_190_GolfClub"],
+    "price": 1,
+    "TileSize": "Normal"
+  },
+  "featured6": {
+    "itemGrants": ["AthenaPickaxe:Pickaxe_ID_140_StreetGoth"],
+    "price": 1,
+    "TileSize": "Normal"
+  },
+  "featured7": {
+    "itemGrants": ["AthenaPickaxe:Pickaxe_ID_014_WinterCamo"],
+    "price": 1,
+    "TileSize": "Normal"
+  },
+  "featured8": {
+    "itemGrants": ["AthenaPickaxe:Pickaxe_ID_035_Prismatic"],
+    "price": 1,
+    "TileSize": "Normal"
+  },
+  "featured9": {
+    "itemGrants": ["AthenaGlider:Glider_ID_095_Witch"],
+    "price": 1,
+    "TileSize": "Normal"
+  },
+
+  "daily1": {
+    "itemGrants": ["AthenaCharacter:CID_032_Athena_Commando_M_Medieval"],
+    "price": 1,
+    "TileSize": "Normal"
+  },
+  "daily2": {
+    "itemGrants": ["AthenaCharacter:CID_084_Athena_Commando_M_Assassin"],
+    "price": 1,
+    "TileSize": "Normal"
+  },
+  "daily3": {
+    "itemGrants": ["AthenaDance:EID_Floss"],
+    "price": 1,
+    "TileSize": "Normal"
+  },
+  "daily4": {
+    "itemGrants": ["AthenaDance:EID_TakeTheL"],
+    "price": 1,
+    "TileSize": "Normal"
+  },
+  "daily5": {
+    "itemGrants": ["AthenaPickaxe:Pickaxe_ID_013_Teslacoil"],
+    "price": 1,
+    "TileSize": "Normal"
+  },
+  "daily6": {
+    "itemGrants": ["AthenaGlider:Glider_Warthog"],
+    "price": 1,
+    "TileSize": "Normal"
+  }
+}
