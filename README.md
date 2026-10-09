@@ -1,249 +1,275 @@
-# STORM BACKEND
 <img src="https://i.ibb.co/zh4vJ5N2/banner.png" width="900">
-by @notsayko and @metixw
-
-
-> [!WARNING]
-> Back up your configuration before making changes. Incorrect environment variables or invalid configuration can prevent Storm Backend from starting. Never publish real tokens, API keys, passwords, or other secrets.
-
-> [!TIP]
-> Need help or want to discuss the project? Join the [Discord server](https://discord.gg/MCDGDH9nbR). If this README is useful to you, please **star the repository** — it really helps support more documentation and updates.
-
----
 
 # Storm Backend
 
-A private Fortnite server backend built with **Bun**, **TypeScript**, **Express**, and **MongoDB**. Storm Backend is designed to emulate selected backend services so players can connect to custom game sessions.
+A Fortnite private-server backend built with **Bun, TypeScript, Express, and MongoDB**.
 
-> **Project note:** This README summarizes the features and configuration described for the project. Actual behavior depends on the implementation and deployment configuration.
+Storm Backend brings authentication, player profiles, cloud storage, the item shop, V-Bucks rewards, Arena rankings, matchmaking, and Discord integration together in one project.
 
-## Table of Contents
+> [!TIP]
+> Need help? Join the [Discord server](https://discord.gg/MCDGDH9nbR). If this project is useful, please star the repository — it helps support future improvements.
 
-- [Overview](#overview)
-- [Features](#features)
-  - [Authentication and Sessions](#authentication-and-sessions)
-  - [Player Profiles and Cloud Storage](#player-profiles-and-cloud-storage)
-  - [Item Shop](#item-shop)
-  - [V-Bucks Rewards API](#v-bucks-rewards-api)
-  - [Arena Leaderboard and Online Players](#arena-leaderboard-and-online-players)
-  - [Matchmaking](#matchmaking)
-  - [Discord Integration](#discord-integration)
-  - [Launcher API](#launcher-api)
-- [Database Collections](#database-collections)
-- [Technology Stack](#technology-stack)
-- [Configuration](#configuration)
-- [Security Considerations](#security-considerations)
-- [Project Structure](#project-structure)
-- [Contributing](#contributing)
+> [!WARNING]
+> Back up your configuration before making changes. Never publish API keys, tokens, passwords, or other secrets. Use the project responsibly and respect applicable terms of service.
 
-## Overview
+---
 
-Storm Backend brings several services together behind one backend:
+## Backend features
 
-- Account authentication and session management
-- Player profiles, cosmetics, and cloud settings
-- A configurable item shop and purchase handling
-- V-Bucks reward administration
-- Arena rankings and online-player information
-- WebSocket-based matchmaking
-- Discord bot commands and role-based rewards
-- A separate login API for custom launchers
+<details>
+<summary><strong>Authentication & sessions</strong></summary>
 
-## Features
+### What it does
 
-### Authentication and Sessions
+Handles account sign-in and session management for supported clients.
 
-Implemented in `auth.ts`, the authentication system supports these reported flows:
+### Supported flows
 
-- **Client Credentials** for launcher authentication
-- **Password Grant** for email/password login
-- **Refresh Tokens** for renewing sessions
-- **Exchange Codes** for multi-platform login flows
-- Optional account registration support for ProjectReboot.dev accounts
+- **Client Credentials** — authenticates a launcher or client.
+- **Password Grant** — signs in with email and password.
+- **Refresh Token** — renews an existing session.
+- **Exchange Code** — supports exchange-code login flows.
 
-Session handling includes:
+### Session management
 
-- One active device per account, with previous sessions evicted when a new session is created
-- Access-token lifetime of 8 hours and refresh-token lifetime of 24 hours
-- Ban checks before login
-- Optional client-version restrictions
+- Enforces one active device per account by invalidating the previous session.
+- Uses reported token lifetimes of **8 hours for access tokens** and **24 hours for refresh tokens**.
+- Checks account bans before login.
+- Can restrict specific game-client versions.
 
-Token lifetimes and supported flows should be confirmed against the current implementation before relying on them in production.
+**Implementation:** `auth.ts`
 
-### Player Profiles and Cloud Storage
+</details>
 
-Profile and cloud-storage handling is reported in `main.ts`.
+<details>
+<summary><strong>Player profiles & cloud storage</strong></summary>
 
-Cloud storage supports:
+### What it does
 
-- **System files** for shared configuration files, such as `.ini` files
-- **User files** for player-specific settings, including `ClientSettings.sav`
-- Uploading and downloading player configuration files
+Stores player-owned data such as cosmetics, loadouts, gifts, currencies, and settings.
 
-Reported profile commands include:
+### Cloud storage
+
+| Storage type | Purpose |
+| --- | --- |
+| System files | Shared configuration files, such as `.ini` files |
+| User files | Player-specific settings, including `ClientSettings.sav` |
+
+The backend supports uploading and downloading configuration files.
+
+### Profile commands
 
 | Command | Purpose |
 | --- | --- |
-| `EquipBattleRoyaleCustomization` | Equip a cosmetic, emote, or other customization |
-| `SetCosmeticLockerSlot` | Update a cosmetic locker slot |
-| `MarkItemSeen` | Mark an item as seen and clear its “new” indicator |
-| `PurchaseCatalogEntry` | Purchase an item from the catalog |
-| `RemoveGiftBox` | Remove or open a received gift box |
+| `EquipBattleRoyaleCustomization` | Equips cosmetics or emotes |
+| `SetCosmeticLockerSlot` | Updates a cosmetic locker slot |
+| `MarkItemSeen` | Clears an item's “new” indicator |
+| `PurchaseCatalogEntry` | Processes a catalog purchase |
+| `RemoveGiftBox` | Removes or opens a gift box |
 
-Supported profile types are reported to include:
+### Profile types
 
 - `athena` — cosmetics and loadouts
 - `common_core` — V-Bucks, gifts, and purchase history
 - `profile0` — alternative currency
-- `creative` and `collections` — creative-mode and collection data
+- `creative` and `collections` — creative and collection data
 
-### Item Shop
+**Implementation:** `main.ts`
 
-The shop implementation is reported in `main.ts`.
+</details>
 
-Its features include:
+<details>
+<summary><strong>Item shop & catalog</strong></summary>
 
-- Loading shop data from `shop.json` and `catalog.json`
-- Daily and Featured shop sections
-- Offers priced in V-Bucks
-- Bundles containing multiple items
-- Daily offer expiration at midnight
-- Balance checks before purchase
-- Automatic currency deduction and item delivery to the player's `athena` profile
-- `CatalogPurchase` notifications
+### What it does
 
-The exact rotation schedule and timezone should be verified in the shop implementation.
+Builds shop offers from the project's catalog data.
 
-### V-Bucks Rewards API
+### Features
 
-The reward API is reported in `vbucks.ts`.
+- Reads `shop.json` and `catalog.json`.
+- Supports **Daily** and **Featured** sections.
+- Supports V-Bucks pricing and multi-item bundles.
+- Expires offers on a daily schedule.
+- Checks the player's balance before a purchase.
+- Deducts currency and adds purchased items to the player's `athena` profile.
+- Can send a `CatalogPurchase` notification.
 
-- Requires an API key
-- Supports configurable reward reasons and amounts
-- Can create a `GiftBox` in the player's profile
-- Can be integrated with game servers to issue rewards automatically
+The exact shop rotation time and timezone depend on the implementation.
 
-Example reward configuration:
+**Implementation:** `main.ts`
+
+</details>
+
+<details>
+<summary><strong>V-Bucks rewards API</strong></summary>
+
+### What it does
+
+Provides an API for authorized services to grant V-Bucks rewards.
+
+### How it works
+
+1. A caller sends a reward request with the required API key.
+2. The backend checks the configured reward reason and amount.
+3. The player's currency-related profile data is updated.
+4. The backend can create a `GiftBox`, depending on the implementation.
+
+Example reward mapping:
 
 ```text
 Kill:25,Win:50
 ```
 
-Keep the API key private. Do not commit real keys, tokens, or production credentials to the repository.
+This example means a configured `Kill` reward of 25 and `Win` reward of 50. Actual parsing rules depend on the code.
 
-### Arena Leaderboard and Online Players
+**Security:** Keep the API key private and restrict this endpoint to trusted callers.
 
-The leaderboard implementation is reported in `leaderboard.ts`.
+**Implementation:** `vbucks.ts`
 
-- Ranks players by Arena Hype points
-- Supports pagination, with up to 50 players per page
-- Can look up a specific player's rank
-- Displays Arena division information
-- Exposes `/api/onlineplayers` for online-player information
-- Uses WebSocket connections to track connected players
+</details>
 
-### Matchmaking
+<details>
+<summary><strong>Arena leaderboard & online players</strong></summary>
 
-The matchmaking service is reported in `index.ts` and uses WebSockets on a separate port.
+### Arena rankings
 
-The described flow is:
+- Ranks players by Hype points.
+- Supports pagination, with up to 50 players per page.
+- Can look up a player's rank.
+- Displays Arena division information.
+
+### Online-player endpoint
+
+`/api/onlineplayers` provides online-player information based on connected-player tracking.
+
+**Implementation:** `leaderboard.ts`
+
+</details>
+
+<details>
+<summary><strong>WebSocket matchmaking</strong></summary>
+
+### Connection flow
 
 ```text
 Connecting → Queued → SessionAssignment → Play
 ```
 
-Reported behavior includes:
+### How it works
 
-- Generating unique `ticketId`, `matchId`, and `sessionId` values
-- Broadcasting the number of players in the queue
-- Starting a countdown when players join
-- Grouping queued players into a session when the countdown ends
-- Cleaning up disconnected clients
+1. A client connects to the matchmaking WebSocket service.
+2. The service places the client in the queue.
+3. The queue count is broadcast to connected clients.
+4. The backend creates unique ticket, match, and session identifiers.
+5. When the countdown ends, queued players are assigned together.
+6. Disconnected clients are cleaned up.
 
-The reported countdown starts at 10 seconds for the first player and decreases by 3 seconds for each additional player. Confirm the exact timing and minimum/maximum values in the implementation.
+The described countdown starts at 10 seconds for the first player and decreases by 3 seconds per additional player. Confirm timing and edge cases in the source code.
 
-### Discord Integration
+**Implementation:** `index.ts`
 
-The Discord bot is reported in `index.ts` and uses Discord.js v13.
+</details>
 
-Features include:
+<details>
+<summary><strong>Discord bot & role rewards</strong></summary>
 
-- Synchronizing slash commands
-- Showing the in-game player count in the bot's status
-- Optional cross-bans between Discord and the game
-- Role-based reward bundles
+### Bot features
 
-Reported commands:
+- Synchronizes slash commands.
+- Can display the current in-game player count.
+- Can link Discord bans with in-game bans when cross-bans are enabled.
+- Can grant configured rewards based on Discord roles.
+
+### Reported commands
 
 | Command | Purpose |
 | --- | --- |
-| `/register` | Create an in-game account |
-| `/donate` | Give V-Bucks to a player |
-| `/add` | Add items to a player's account |
-| `/ban` | Apply a temporary or permanent ban |
-| `/unban` | Remove a ban |
+| `/register` | Creates an in-game account |
+| `/donate` | Gives V-Bucks to a player |
+| `/add` | Adds items to a player's account |
+| `/ban` | Applies a temporary or permanent ban |
+| `/unban` | Removes a ban |
 
-Role bundles are reported in `rolebundles.ts`:
+### Role bundles
 
-| Bundle type | Description |
+| Bundle | Purpose |
 | --- | --- |
 | `full` | Full cosmetic bundle |
 | `og` | Original-season cosmetic bundle |
 | `vbucks:X` | Configurable V-Bucks amount |
 
-Bundles may be triggered when a role is assigned or when a member joins the Discord server, depending on configuration.
+Role rewards may be triggered when a role is assigned or when a member joins, depending on configuration.
 
-### Launcher API
+**Implementation:** `index.ts`, `rolebundles.ts`
 
-`launcher.ts` provides a separate login endpoint for custom launchers.
+</details>
 
-The reported flow uses email/password credentials and returns the username for display. It is separate from the main OAuth-style authentication flow.
+<details>
+<summary><strong>Custom launcher API</strong></summary>
 
-Because this is a separate authentication path, it should use appropriate password verification, rate limiting, and error handling.
+Provides a separate email/password login flow for custom launchers and returns the username for display. It is separate from the main authentication service.
 
-## Database Collections
+Because it handles credentials, it should use secure password verification, rate limiting, and generic error messages.
 
-Storm Backend uses MongoDB, with Mongoose reported as the object-document mapper.
+**Implementation:** `launcher.ts`
 
-| Collection | Purpose |
+</details>
+
+<details>
+<summary><strong>Database & internal services</strong></summary>
+
+### MongoDB collections
+
+| Collection | Stored data |
 | --- | --- |
-| `users` | Accounts, ban state, and Discord links |
-| `profiles` | Items, cosmetics, V-Bucks, and loadouts |
-| `friends` | Reserved for a friends system; reported as not implemented |
-| `arena` | Arena Hype points and divisions |
+| `users` | Accounts, bans, and Discord links |
+| `profiles` | Cosmetics, items, currencies, and loadouts |
+| `friends` | Reserved for a friends feature; reported as not implemented |
+| `arena` | Hype points and divisions |
 
-## Technology Stack
+### Supporting modules
+
+| File | Responsibility |
+| --- | --- |
+| `config.ts` | Loads environment-based configuration |
+| `security.ts` | Rate limits, security headers, IP handling, request-size limits |
+| `logger.ts` | Backend, bot, error, and debug logs |
+| `tokens.ts` | JWT creation, token storage, and expiration |
+| `functions.ts` | Version detection, default profiles, registration, UUID helpers |
+
+</details>
+
+<details>
+<summary><strong>Technology stack & configuration</strong></summary>
+
+### Stack
 
 | Technology | Role |
 | --- | --- |
-| Bun | JavaScript/TypeScript runtime |
+| Bun | Runtime |
 | TypeScript | Application language |
 | Express.js | HTTP API framework |
-| MongoDB | Database |
-| Mongoose | MongoDB object modeling |
-| `ws` | WebSocket matchmaking |
-| Discord.js v13 | Discord bot integration |
+| MongoDB + Mongoose | Database and data modeling |
+| `ws` | WebSocket communication |
+| Discord.js v13 | Discord bot |
 | `bcrypt` | Password hashing |
 | `jsonwebtoken` | JWT handling |
 
-## Configuration
-
-Create a local `.env` file and configure the values required by your deployment. Do not commit this file if it contains secrets.
-
-The following names are reported by the project description; check the source code for the exact expected formats and defaults.
+### Environment variables
 
 | Variable | Purpose |
 | --- | --- |
 | `MONGO_URI` | MongoDB connection string |
-| `PORT` | HTTP server port; reported default is `3551` |
+| `PORT` | HTTP port; reported default is `3551` |
 | `BOT_TOKEN` | Discord bot token |
-| `API_KEY` | Key for the V-Bucks reward API |
+| `API_KEY` | V-Bucks API key |
 | `MATCHMAKER_IP` | Matchmaker address in `IP:PORT` format |
-| `GAME_SERVER_IP` | Game server addresses, separated by commas |
-| `ROLE_BUNDLES` | Role-to-bundle mappings, such as `ROLE_ID:bundle_type` |
-| `ENABLE_CROSS_BANS` | Enables or disables Discord/game cross-bans |
-| `ENABLE_REBOOT_USER` | Controls the reported ProjectReboot.dev account support |
-| `DEBUG_LOGS` | Enables or disables debug logging |
+| `GAME_SERVER_IP` | Comma-separated game server addresses |
+| `ROLE_BUNDLES` | Discord role-to-reward mapping |
+| `ENABLE_CROSS_BANS` | Enables or disables cross-bans |
+| `ENABLE_REBOOT_USER` | Controls the reported account integration |
+| `DEBUG_LOGS` | Enables or disables debug logs |
 
 Example template — replace placeholders with your own values:
 
@@ -260,71 +286,39 @@ ENABLE_REBOOT_USER=false
 DEBUG_LOGS=false
 ```
 
-This is a template, not a guarantee that every variable is optional or that these example addresses match your deployment. Check the configuration loader before starting the server.
+This is an example template, not a guarantee that these values match your deployment. Check the configuration loader for required variables and expected formats.
 
-## Security Considerations
+</details>
 
-Before exposing a deployment to the internet:
+---
 
-- Store secrets in environment variables or a secret manager.
-- Never commit `.env`, API keys, bot tokens, JWT secrets, or player credentials.
-- Hash passwords using a suitable password-hashing algorithm.
-- Apply strict rate limits to authentication and administrative endpoints.
-- Validate and sanitize request data.
-- Use HTTPS behind a properly configured reverse proxy.
-- Restrict the V-Bucks administration API to trusted callers.
-- Avoid logging passwords, tokens, session identifiers, or other sensitive data.
-- Verify authorization on every account, profile, and moderation action.
-- Keep dependencies updated and review the security implications of each integration.
+## Installation
 
-The project description also reports request-size limits, security headers, IP normalization for proxy deployments, and endpoint-specific rate limiting in `security.ts`.
+Install [Bun](https://bun.sh/docs/installation), then install dependencies:
 
-## Project Structure
-
-The following is a high-level map of the files mentioned in the project description. It is not a complete directory listing.
-
-```text
-.
-├── auth.ts
-├── main.ts
-├── vbucks.ts
-├── leaderboard.ts
-├── index.ts
-├── launcher.ts
-├── rolebundles.ts
-├── config.ts
-├── security.ts
-├── logger.ts
-├── tokens.ts
-└── functions.ts
+```bash
+bun install
 ```
 
-| File | Reported responsibility |
-| --- | --- |
-| `auth.ts` | Authentication and session handling |
-| `main.ts` | Profiles, cloud storage, and item shop |
-| `vbucks.ts` | V-Bucks reward API |
-| `leaderboard.ts` | Arena rankings and online-player endpoint |
-| `index.ts` | Matchmaking and Discord bot integration |
-| `launcher.ts` | Custom launcher login |
-| `rolebundles.ts` | Discord role-based rewards |
-| `config.ts` | Environment-based configuration |
-| `security.ts` | Rate limits, headers, IP handling, and request limits |
-| `logger.ts` | Structured application logs |
-| `tokens.ts` | JWT generation, token storage, and expiration |
-| `functions.ts` | Version detection, default profiles, registration, and UUID helpers |
+Start the backend using the entry point configured in your project. For example:
+
+```bash
+bun run src/index.ts
+```
+
+Check the actual entry point and configure the required environment variables before running the server.
 
 ## Contributing
 
 Contributions that improve documentation, reliability, testing, and security are welcome.
 
-When submitting a change:
+1. Fork the repository.
+2. Create a branch for your changes.
+3. Explain the change and how to test it.
+4. Open a pull request.
 
-1. Explain what the change does and why it is needed.
-2. Include reproduction steps for bug fixes.
-3. Update documentation when behavior or configuration changes.
-4. Never include real credentials, private player data, or production secrets in issues or pull requests.
+Do not include real credentials, tokens, or private player data in commits or issues.
 
 ---
 
-**Storm Backend** — a TypeScript-based backend project for a custom Fortnite server environment.
+*Storm Backend — TypeScript backend services for a custom Fortnite server environment.*
