@@ -5,7 +5,7 @@ import { UpdateTokens } from "../services/functions";
 import { processRolesForMember, grantBundleForRole } from "./rolebundles";
 import config from "../services/config";
 
-// Import commands
+
 import * as donateCmd from "./commands/donate";
 import * as banCmd from "./commands/ban";
 import * as unbanCmd from "./commands/unban";
@@ -58,7 +58,7 @@ client.on("interactionCreate", async (interaction) => {
     }
 });
 
-// Role bundles: auto-grant on member join and role update
+
 client.on("guildMemberAdd", async (member) => {
     try { await processRolesForMember(member); } catch (err) { log.error("Role bundle error on join:", err); }
 });
@@ -114,7 +114,7 @@ client.on("guildBanRemove", async (ban) => {
     }
 });
 
-// Start
+
 if (!config.discord.bot_token || config.discord.bot_token.trim() === "") {
     log.error("Discord bot token not set. Add BOT_TOKEN to your .env file.");
     (globalThis as any).botConnected = false;
