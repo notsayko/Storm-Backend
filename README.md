@@ -1,6 +1,6 @@
 # STORM BACKEND
-<img src="./banner.png" width="900">
-
+<img src="https://i.ibb.co/zh4vJ5N2/banner.png" width="900">
+by @notsayko and @metixw
 > [!WARNING]
 > Back up your configuration before making changes. Incorrect environment variables or invalid configuration can prevent Storm Backend from starting. Never publish real tokens, API keys, passwords, or other secrets.
 
