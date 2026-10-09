@@ -1,3 +1,6 @@
+# STORM BACKEND
+<img src="./banner.png" width="900">
+
 > [!WARNING]
 > Back up your configuration before making changes. Incorrect environment variables or invalid configuration can prevent Storm Backend from starting. Never publish real tokens, API keys, passwords, or other secrets.
 
