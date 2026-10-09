@@ -1,9 +1,7 @@
 @echo off
-echo i'm a paster walahi
+title thanks for using storm backend by notsayko and metixw
 
 bun install >nul 2>&1
-if %errorlevel% neq 0 (
-    echo Failed to install dependencies.
-    exit /b %errorlevel%
-)
+if errorlevel 1 exit /b 1
+
 bun run src/index.ts
