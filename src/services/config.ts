@@ -3,8 +3,6 @@ import type { StormConfig } from "../types";
 function parseRoleBundles(raw: string): Record<string, string> {
     const bundles: Record<string, string> = {};
     if (!raw) return bundles;
-    // Format: ROLE_ID:bundle_type, where bundle_type can be "vbucks:amount"
-    // Split on comma first, then split each entry on first colon only for role ID
     for (const entry of raw.split(",")) {
         const trimmed = entry.trim();
         if (!trimmed) continue;
