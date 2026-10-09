@@ -1,4 +1,6 @@
 @echo off
+echo i'm a paster walahi
+
 bun install >nul 2>&1
 if %errorlevel% neq 0 (
     echo Failed to install dependencies.
